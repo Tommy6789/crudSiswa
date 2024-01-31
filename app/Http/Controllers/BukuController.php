@@ -14,7 +14,7 @@ class BukuController extends Controller
     public function index()
     {
         $data = Buku::all();
-        return view('buku.index',['data'=>$data]);
+        return view('buku.index', ['data' => $data]);
     }
 
     /**
@@ -23,7 +23,7 @@ class BukuController extends Controller
     public function create()
     {
         $data = Penulis::all();
-        return view('buku.create',['penulis'=>$data]);
+        return view('buku.create', ['penulis' => $data]);
     }
 
     /**
@@ -43,7 +43,7 @@ class BukuController extends Controller
         ]);
 
         // Upload and save image
-        $imageName = time().'.'.$request->foto->extension();
+        $imageName = time() . '.' . $request->foto->extension();
         $request->foto->move(public_path('images'), $imageName);
 
         // Add the image file name to the validated data
@@ -70,7 +70,7 @@ class BukuController extends Controller
     {
         $penulis = Penulis::all();
         $data = Buku::findOrFail($id);
-        return view('buku.edit', ['data'=>$data,'penulis'=>$penulis]);
+        return view('buku.edit', ['data' => $data, 'penulis' => $penulis]);
     }
 
     /**
@@ -78,21 +78,38 @@ class BukuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validasiData = $request->validate(
-            [
-                'judul_buku' => 'required',
-                'tahun_terbit' => 'required',
-                'isbn' => 'required',
-                'id_penulis' => 'required',
-                'genre' => 'required',
-                'penerbit' => 'required',
-                'tempat_terbit' => 'required',
-                'foto' => 'required'
-            ]
-        );
-
         $data = Buku::findOrFail($id);
-        $data->update($validasiData);
+
+        // Check if a new image file is provided
+        if ($request->hasFile('foto')) {
+            $validasiData = $request->validate([
+                'judul_buku' => 'required|string',
+                'tahun_terbit' => 'required',
+                'isbn' => 'required|string',
+                'id_penulis' => 'required',
+                'genre' => 'required|string',
+                'penerbit' => 'required|string',
+                'tempat_terbit' => 'required|string',
+                'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Update validation rule for image
+            ]);
+
+            // Delete the previous image file if it exists
+            if ($data->foto) {
+                unlink(public_path('images/' . $data->foto));
+            }
+
+            // Upload and save the new image
+            $imageName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('images'), $imageName);
+
+            $validasiData['foto'] = $imageName;
+
+            $data->update($validasiData);
+        } else {
+            // If no new image, update other fields without changing the existing image
+            $data->update($request->except('foto'));
+        }
+
         return redirect('/buku')->with('success', 'Record updated successfully!');
     }
 
@@ -101,8 +118,15 @@ class BukuController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = Buku::FindOrFail($id);
+        $data = Buku::findOrFail($id);
+
+        // Check if the foto attribute exists and the image file exists
+        if ($data->foto && file_exists(public_path('images/' . $data->foto))) {
+            unlink(public_path('images/' . $data->foto)); // Delete the image file
+        }
+
         $data->delete();
-        return redirect('/buku')->with('success','Record Deleted Successfully');
+
+        return redirect('/buku')->with('success', 'Record Deleted Successfully');
     }
 }

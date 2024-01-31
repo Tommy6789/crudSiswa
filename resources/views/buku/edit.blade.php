@@ -26,8 +26,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                
-                            <form action=" {{ route('buku.update', $data->id) }}" method="post">
+                            <form action=" {{ route('buku.update', $data->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <h1>Data buku</h1>
@@ -57,6 +56,13 @@
                                 <input type="text" name="penerbit" value="{{ $data->penerbit }}" class="form-control">
                                 <label for="">TEMPAT TERBIT</label>
                                 <input type="text" name="tempat_terbit" value="{{ $data->tempat_terbit }}" class="form-control">
+                                <label for="foto">SAMPUL BUKU</label>
+                                <input type="file" name="foto" class="form-control">
+                                <br>
+                                @if($data->foto)
+                                    <img src="{{ asset('images/' . $data->foto) }}" alt="{{ $data->judul_buku }} Image" style="max-width: 100px;">
+                                @endif
+                                <br>
                                 <br>
                                 <button type="submit" class="btn btn-warning">EDIT</button>
                             </div>
