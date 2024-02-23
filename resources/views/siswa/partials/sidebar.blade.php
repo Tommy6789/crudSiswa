@@ -14,8 +14,10 @@
           <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
+          @auth
+              <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+          @endauth
+      </div>
       </div>
 
       <!-- SidebarSearch Form -->
@@ -38,7 +40,8 @@
           <li class="nav-item {{ Route::is('siswa') || Route::is('siswa.create') || Route::is('siswa.edit') ? 'menu-open' : '' }} 
           {{ Route::is('penulis.index') || Route::is('penulis.create') || Route::is('penulis.edit') ? 'menu-open' : '' }} 
           {{ Route::is('buku.index') || Route::is('buku.create') || Route::is('buku.edit') ? 'menu-open' : '' }}
-          {{ Route::is('peminjaman.index') || Route::is('peminjaman.create') || Route::is('peminjaman.edit') ? 'menu-open' : '' }}">
+          {{ Route::is('peminjaman.index') || Route::is('peminjaman.create') || Route::is('peminjaman.edit') ? 'menu-open' : '' }}
+          {{ Route::is('profile.show')? 'menu-open' : '' }}">
             <a href="#=" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>

@@ -4,6 +4,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PenulisController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +39,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('penulis', PenulisController::class);
     Route::resource('buku', BukuController::class);
     Route::resource('peminjaman', PeminjamanController::class);
+    Route::resource('profile', ProfileController::class);
+    Route::get('/profile/{user}', 'ProfileController@show')->name('profile.show');
 });
