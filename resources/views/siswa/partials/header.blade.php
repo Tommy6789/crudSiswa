@@ -30,7 +30,7 @@
         <a href="{{ route('siswa') }}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('profile.show', auth()->user()) }}" class="nav-link">Profile</a>
+        <a href="{{ route('profile.index', auth()->user()) }}" class="nav-link">Profile</a>
       </li>    
     </ul>
 

@@ -28,7 +28,8 @@ Route::get('register', [LoginController::class, "register"])->name('register');
 Route::post('login_check', [LoginController::class, "login_check"])->name('login_check');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () 
+{
     Route::get('/siswa', [SiswaController::class, "index"])->name('siswa');
     Route::get('/siswa/create', [SiswaController::class, "create"])->name('siswa.create');
     Route::post('/siswa/post', [SiswaController::class, "store"])->name('siswa.post');
@@ -38,7 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('penulis', PenulisController::class);
     Route::resource('buku', BukuController::class);
+    Route::get('peminjaman/{id}/bukti_pinjam',[PeminjamanController::class,'bukti_pinjam'])->name('peminjaman.bukti_pinjam');
     Route::resource('peminjaman', PeminjamanController::class);
     Route::resource('profile', ProfileController::class);
-    Route::get('/profile/{user}', 'ProfileController@show')->name('profile.show');
 });

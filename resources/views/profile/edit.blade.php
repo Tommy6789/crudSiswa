@@ -27,12 +27,12 @@
                         <div class="card">
                             <div class="card-body">
                                 
-                            <form action=" {{ route('siswa.update', $data->id) }}" method="post">
+                            <form action=" {{ route('profile.update', $data->id) }}" method="post">
                                 @csrf
                                 {{-- PUT digunakan untuk mengupdate data --}}
                                 @method('PUT')
-                                <h1>Data Siswa</h1>
-                                <a type="button" href=" {{ route('siswa') }} " class="btn btn-info">KEMBALI</a>
+                                <h1>Data profile</h1>
+                                <a type="button" href=" {{ route('profile.index') }} " class="btn btn-info">KEMBALI</a>
                                 <br>
                                 <label for="">ID SISWA</label>
                                 <input type="text" name="id_siswa" value="{{ $data->id_siswa }}" class="form-control">

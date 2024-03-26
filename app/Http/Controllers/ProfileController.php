@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -11,7 +12,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $data = Siswa::all();
+        return view('profile.index', ['data'=> $data]);
     }
 
     /**
@@ -36,7 +38,11 @@ class ProfileController extends Controller
     public function show(string $id)
     {
         $user = auth()->user(); // Fetch the currently authenticated user
-        return view('profile.show', compact('user'));
+        return view('profile.index', compact('user'));
+        //Retrive the record to be updated
+        $data = Siswa::findOrFail($id);
+        //Pass the data to the edit view
+        return view('profile.edit', compact('data'));
     }
 
     /**
@@ -44,7 +50,10 @@ class ProfileController extends Controller
      */
     public function edit(string $id)
     {
-        //
+         //Retrive the record to be updated
+        $data = Siswa::findOrFail($id);
+         //Pass the data to the edit view
+        return view('profile.edit', compact('data'));
     }
 
     /**
@@ -52,7 +61,23 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validasiData = $request->validate(
+            [
+                'id_siswa' => 'required',
+                'nama' => 'required',
+                'tgl_lahir' => 'required',
+                'umur' => 'required'
+            ]
+        );
+
+        // Find the record to be updated
+        $data = Siswa::findOrFail($id);
+
+        // Update the record with the validated data
+        $data->update($validasiData);
+
+        // Redirect to a page or return a response
+        return redirect('profile')->with('success', 'Record updated successfully!');
     }
 
     /**

@@ -30,17 +30,25 @@
 <h3 class="profile-username text-center">{{ auth()->user()->name }}</h3>
 <p class="text-muted text-center">{{ auth()->user()->role }}</p>
 <ul class="list-group list-group-unbordered mb-3">
-<li class="list-group-item">
-<b>Followers</b> <a class="float-right">1,322</a>
-</li>
-<li class="list-group-item">
-<b>Following</b> <a class="float-right">543</a>
-</li>
-<li class="list-group-item">
-<b>Friends</b> <a class="float-right">13,287</a>
-</li>
-</ul>
-<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+    @foreach ($data as $item)
+    @php
+    $no = 1;
+    @endphp
+    <li class="list-group-item">
+    <b>ID Siswa</b> <a class="float-right">{{ $no++ }}</a>
+    </li>
+    <li class="list-group-item">
+    <b>Nama</b> <a class="float-right">{{ $item->nama }}</a>
+    </li>
+    <li class="list-group-item">
+    <b>Tanggal Lahir</b> <a class="float-right">{{$item->tgl_lahir }}</a>
+    </li>
+    <li class="list-group-item">
+    <b>Umur</b> <a class="float-right">{{$item->umur }}</a>
+    </li>
+    @endforeach
+    </ul>
+    <a href="{{ route('profile.edit', $item->id) }}" type="button" class="btn btn-warning btn-block">Edit</a>
 </div>
 
 </div>
@@ -91,34 +99,19 @@ B.S. in Computer Science from the University of Tennessee at Knoxville
 <div class="active tab-pane" id="activity">
 
 <!-- Activity content goes here -->
-
 </div>
-
 <div class="tab-pane" id="timeline">
-
 <!-- Timeline content goes here -->
-
 </div>
-
 <div class="tab-pane" id="settings">
-
 <!-- Settings content goes here -->
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 </section>
-
 </div>
-
 @endsection

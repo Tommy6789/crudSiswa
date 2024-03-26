@@ -78,4 +78,10 @@ class PeminjamanController extends Controller
     {
         //
     }
+
+    public function bukti_pinjam(string $id)
+    {
+        $data = PeminjamanBuku::where('id','=',$id)->get();
+        return view('pdf.bukti_pinjam',['data'=>$data]);
+    }
 }

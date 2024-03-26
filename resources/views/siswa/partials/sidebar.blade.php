@@ -37,11 +37,12 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
               with font-awesome or any other icon font library -->
-          <li class="nav-item {{ Route::is('siswa') || Route::is('siswa.create') || Route::is('siswa.edit') ? 'menu-open' : '' }} 
+          <li class="nav-item 
+          {{ Route::is('siswa') || Route::is('siswa.create') || Route::is('siswa.edit') ? 'menu-open' : '' }} 
           {{ Route::is('penulis.index') || Route::is('penulis.create') || Route::is('penulis.edit') ? 'menu-open' : '' }} 
           {{ Route::is('buku.index') || Route::is('buku.create') || Route::is('buku.edit') ? 'menu-open' : '' }}
           {{ Route::is('peminjaman.index') || Route::is('peminjaman.create') || Route::is('peminjaman.edit') ? 'menu-open' : '' }}
-          {{ Route::is('profile.show')? 'menu-open' : '' }}">
+          {{ Route::is('profile.index') || Route::is('profile.edit') ? 'menu-open' : '' }}">
             <a href="#=" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>

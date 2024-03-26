@@ -12,11 +12,11 @@ class PeminjamanBuku extends Model
 
     public function siswa()
     {
-        return $this->belongsTo(Siswa::class, 'id_siswa');
+        return $this->belongsTo(Siswa::class, 'id_siswa','id');
     }
 
     public function buku()
     {
-        return $this->belongsTo(Buku::class, 'id_buku');
+        return $this->belongsTo(Buku::class, 'id_buku','id');
     }
 }
